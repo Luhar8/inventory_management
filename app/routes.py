@@ -30,3 +30,29 @@ def inventory():
         {"name": "Oranges", "quantity": 15},
     ]
     return render_template('inventory.html', items=inventory_items)
+
+# @app.route('/update_inventory', methods=['POST'])
+# def update_inventory():
+#     item_id = int(request.form['item_id'])
+#     quantity = int(request.form['quantity'])
+
+#     server_address = 'localhost'
+#     server_port = 4433
+#     cert_file = './certs/quic_certificate.pem'
+
+#     async def update_inventory_async():
+#         response = await update_inventory_via_quic(server_address, server_port, cert_file, item_id, quantity)
+#         return response
+
+#     loop = asyncio.new_event_loop()
+#     asyncio.set_event_loop(loop)
+#     response = loop.run_until_complete(update_inventory_async())
+
+#     if response:
+#         return jsonify({
+#             "item_id": response.item_id,
+#             "item_name": response.item_name,
+#             "quantity": response.quantity
+#         })
+#     else:
+#         return jsonify({"error": "Failed to update inventory"}), 500
