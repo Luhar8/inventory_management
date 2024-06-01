@@ -139,19 +139,20 @@
 #     # Existing main function code
 
 import asyncio
-from typing import Coroutine, Dict
 from aioquic.asyncio.protocol import QuicConnectionProtocol, QuicStreamHandler
 from aioquic.asyncio import serve
 from aioquic.quic.configuration import QuicConfiguration
-from .echo_quic import EchoQuicConnection, QuicStreamEvent
-from .pdu import Datagram, UpdateInventoryMessage, InventoryRequestMessage, InventoryResponseMessage, MSG_TYPE_DATA_ACK, MSG_TYPE_INVENTORY_REQUEST, MSG_TYPE_INVENTORY_RESPONSE
+from aioquic.quic.events import StreamDataReceived
+from typing import Coroutine,Dict
+from echo_quic import EchoQuicConnection, QuicStreamEvent
+from pdu import Datagram, UpdateInventoryMessage, MSG_TYPE_DATA, MSG_TYPE_DATA_ACK, MSG_TYPE_INVENTORY_REQUEST, MSG_TYPE_INVENTORY_RESPONSE
 
 inventory_data = {
-    1: {"name": "Apple", "quantity": 10},
-    2: {"name": "Coffee Bottles", "quantity": 4},
-    3: {"name": "Bread Packet", "quantity": 8},
-    4: {"name": "Potato Bag", "quantity": 3},
-    5: {"name": "Oranges", "quantity": 15},
+    1: {"id": 1, "name": "Apple", "quantity": 10},
+    2: {"id": 2, "name": "Coffee Bottles", "quantity": 4},
+    3: {"id": 3, "name": "Bread Packet", "quantity": 8},
+    4: {"id": 4, "name": "Potato Bag", "quantity": 3},
+    5: {"id": 5, "name": "Oranges", "quantity": 15},
 }
 
 def get_inventory():

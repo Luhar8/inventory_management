@@ -96,10 +96,12 @@
 #     return asyncio.run(send_inventory_update(item_name, action))
 
 import asyncio
+from aioquic.asyncio.protocol import QuicConnectionProtocol, QuicStreamHandler
 from aioquic.asyncio import connect
 from aioquic.quic.configuration import QuicConfiguration
-from aioquic.quic.events import HandshakeCompleted, StreamDataReceived
-from .pdu import Datagram, UpdateInventoryMessage, InventoryRequestMessage, InventoryResponseMessage, MSG_TYPE_DATA, MSG_TYPE_DATA_ACK, MSG_TYPE_INVENTORY_REQUEST, MSG_TYPE_INVENTORY_RESPONSE
+from quic_server.echo_quic import EchoQuicConnection, QuicStreamEvent
+from quic_server.pdu import UpdateInventoryMessage, InventoryRequestMessage, InventoryResponseMessage, MSG_TYPE_INVENTORY_REQUEST, MSG_TYPE_INVENTORY_RESPONSE
+
 
 async def fetch_inventory():
     configuration = QuicConfiguration(is_client=True)
