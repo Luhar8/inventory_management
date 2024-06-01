@@ -10,8 +10,8 @@ from collections import deque
 
 import json
 
-from app.echo_quic import EchoQuicConnection, QuicStreamEvent
-import app.echo_server, app.echo_client
+from echo_quic import EchoQuicConnection, QuicStreamEvent
+import echo_server, echo_client
 
 ALPN_PROTOCOL = "echo-protocol"
 
@@ -191,3 +191,29 @@ class EchoClientRequestHandler(EchoServerRequestHandler):
                 self.get_next_stream_id)
         await echo_client.echo_client_proto(self.scope, 
             qc)
+
+class QuicConnectionManager:
+    def __init__(self, server_address, server_port, configuration):
+        self.server_address = server_address
+        self.server_port = server_port
+        self.configuration = configuration
+
+    async def __aenter__(self):
+        self.connection = await connect(
+            self.server_address,
+            self.server_port,
+            configuration=self.configuration,
+            create_protocol=AsyncQuicServer
+        )
+        return self.connection._client_handler
+
+    async def __aexit__(self, exc_type, exc, tb):
+        await self.connection.close()
+
+async def connect_to_server():
+    server_address = 'localhost'
+    server_port = 4433
+    cert_file = './cert/cert.pem'
+    
+    config = build_client_quic_config(cert_file)
+    return QuicConnectionManager(server_address, server_port, config)

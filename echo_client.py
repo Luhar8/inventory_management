@@ -1,6 +1,6 @@
 from typing import Dict
-from app.echo_quic import EchoQuicConnection, QuicStreamEvent
-from app.pdu import QueryInventoryMessage, InventoryResponseMessage, UpdateInventoryMessage
+from echo_quic import EchoQuicConnection, QuicStreamEvent
+import pdu
 
 async def fetch_inventory(conn: EchoQuicConnection):
     # Create a Query Inventory Message (QIM)

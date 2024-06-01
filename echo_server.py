@@ -1,7 +1,7 @@
 import asyncio
 from typing import Dict
-from app.echo_quic import EchoQuicConnection, QuicStreamEvent
-import app.pdu
+from echo_quic import EchoQuicConnection, QuicStreamEvent
+import pdu
 
 # Simulated inventory database
 inventory_db = {
